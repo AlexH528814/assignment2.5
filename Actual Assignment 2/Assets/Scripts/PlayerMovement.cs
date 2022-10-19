@@ -54,30 +54,28 @@ public class PlayerMovement : MonoBehaviour
     {
         if (dirX > 0f)
         {
-            anim.SetBool("running", true); 
+            state = MovementState.running;
             sprite.flipX = false;
         }
 
-        if (dirX < 0f)
+        else if (dirX < 0f)
         {
-            anim.SetBool("running", true);
+            state = MovementState.running;
             sprite.flipX = true;
         }
 
-        if (dirX == 0f)
+
+        if (rb.velocity.y > 0.1f)
         {
-            anim.SetBool("running", false);
+            state = MovementState.jumping;
         }
 
-        if (isGrounded() == false)
-        {
-            anim.SetBool("jumping", true);
-        }
 
-        if (isGrounded() == true)
-        {
-            anim.SetBool("jumping", false);
-        }
+        anim.SetInteger("state", (int)state);
+        
+        
+
+        
     }
     
     private bool isGrounded()
